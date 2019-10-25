@@ -13,4 +13,7 @@ jobs:
       run: echo ${{ steps.buildx.outputs.platforms }}
     - name: Run Buildx
       run: |
-        docker buildx build . --platform linux/arm/v7 --push
+        docker buildx build . \
+          --platform linux/arm/v7 \
+          --tag vlkoti/raspberrypi3-homeassistant:latest \
+          --push
