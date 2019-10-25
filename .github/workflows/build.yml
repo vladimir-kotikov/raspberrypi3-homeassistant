@@ -9,10 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: crazy-max/ghaction-docker-buildx@v1
-    - name: Available platforms
-      run: echo ${{ steps.buildx.outputs.platforms }}
-    - name: Run Buildx
-      run: |
+    - run: |
+        docker login -u vlkoti -p ${{ secrets.DOCKERHUB_PASSWORD }}
+    - run: |
         docker buildx build . \
           --platform linux/arm/v7 \
           --tag vlkoti/raspberrypi3-homeassistant:latest \
