@@ -1,0 +1,20 @@
+name: Build image
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: crazy-max/ghaction-docker-buildx@v1
+    - run: |
+        docker login -u vlkoti -p ${{ secrets.DOCKERHUB_PASSWORD }}
+    - run: |
+        docker buildx build . \
+          --platform linux/arm/v7 \
+          --tag vlkoti/raspberrypi3-homeassistant:latest \
+          --push
