@@ -1,0 +1,16 @@
+name: Build image
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: crazy-max/ghaction-docker-buildx@v1
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    - name: Run Buildx
+      run: |
+        docker buildx build . --platform linux/arm/v7 --push
